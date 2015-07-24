@@ -191,7 +191,7 @@ function drawEnabler(vx,vy,vw,vh,text){
   	doc.font('Helvetica')
 	doc.fontSize(18)
   	doc.fillColor('white')
- 	doc.text(text, vx+30,vy + 20,{width:vw - 50,height:vh - 40,align:'left'});
+ 	doc.text(text, vx+30,vy + 20,{width:vw - 50,height:vh - 30,align:'left'});
 
  	
 
