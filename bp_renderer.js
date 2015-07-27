@@ -1,96 +1,96 @@
-//node /Users/steve.snasdell/Documents/BluePrinting/bp_renderer.js client:All%20Blacks%20Blueprint
+	//node /Users/steve.snasdell/Documents/BluePrinting/bp_renderer.js client:All%20Blacks%20Blueprint
 
 
-var args = process.argv
-var passedArguments = {};
+	var args = process.argv
+	var passedArguments = {};
 
-args.forEach(function (val, index, array) {
-  //console.log(index + ': ' + val+ ': ' + array);
-  if ( index==2){
-  	//passedArguments = val
+	args.forEach(function (val, index, array) {
+	//console.log(index + ': ' + val+ ': ' + array);
+	if ( index==2){
+		//passedArguments = val
 
-  	var properties = val.split(',');
-	properties.forEach(function(property) {
-	    var tup = property.split(':');
-	    passedArguments[tup[0]] = decodeURI(tup[1]);
-	});
+		var properties = val.split(',');
+		properties.forEach(function(property) {
+			var tup = property.split(':');
+			passedArguments[tup[0]] = decodeURI(tup[1]);
+		});
 
 
-  }
+	}
 });
 
-console.log(passedArguments)
+	console.log(passedArguments)
 
 
 
 
-var imagesToLoad = []
+	var imagesToLoad = []
 
 
 
 
-/*
+	/*
 
 
-var PDFDocument = require('pdfkit');
-var http = require('http');
-var fs = require('fs');
-var doc = new PDFDocument;
+	var PDFDocument = require('pdfkit');
+	var http = require('http');
+	var fs = require('fs');
+	var doc = new PDFDocument;
 
-http.createServer(function(req, res) {
-  // This opens up the writeable stream to `output`
-  var stream = fs.createWriteStream('/Users/steve.snasdell/Documents/BluePrinting/output.pdf');
+	http.createServer(function(req, res) {
+	// This opens up the writeable stream to `output`
+	var stream = fs.createWriteStream('/Users/steve.snasdell/Documents/BluePrinting/output.pdf');
 
-  // This pipes the POST data to the file
-  doc.pipe(stream);
-  doc.circle(100, 50, 50).stroke();
+	// This pipes the POST data to the file
+	doc.pipe(stream);
+	doc.circle(100, 50, 50).stroke();
 
-  // After all the data is saved, respond with a simple html form so they can post more data
-  req.on('end', function () {
-    doc.pipe(res);   
-    doc.end();
-  });
+	// After all the data is saved, respond with a simple html form so they can post more data
+	req.on('end', function () {
+	doc.pipe(res);   
+	doc.end();
+	});
 
-  // This is here incase any errors occur
-  writeStream.on('error', function (err) {
-    console.log(err);
-  });
-}).listen(8080);
-
-
-//# add stuff to PDF here using methods described below...
-
-//# finalize the PDF and end the stream
-
-*/
-
-//var Tabletop = require('/Users/steve.snasdell/Documents/BluePrinting/js/tabletop.js');
-var Tabletop = require(passedArguments.outputfolder + 'js/tabletop.js');
+	// This is here incase any errors occur
+	writeStream.on('error', function (err) {
+	console.log(err);
+	});
+	}).listen(8080);
 
 
-//var Tabletop = require('/Users/steve.snasdell/Documents/BluePrinting/js/tabletop.js');
+	//# add stuff to PDF here using methods described below...
 
-//var testURL = 'https://docs.google.com/spreadsheets/d/1AHF_-URC-w8urzNGx_sLrNCi8yR9xkaVdr3Rr0ojMBY/pubhtml';
-var testURL = 'https://' + passedArguments.sheet ;
+	//# finalize the PDF and end the stream
+
+	*/
+
+	//var Tabletop = require('/Users/steve.snasdell/Documents/BluePrinting/js/tabletop.js');
+	var Tabletop = require(passedArguments.outputfolder + 'js/tabletop.js');
+
+
+	//var Tabletop = require('/Users/steve.snasdell/Documents/BluePrinting/js/tabletop.js');
+
+	//var testURL = 'https://docs.google.com/spreadsheets/d/1AHF_-URC-w8urzNGx_sLrNCi8yR9xkaVdr3Rr0ojMBY/pubhtml';
+	var testURL = 'https://' + passedArguments.sheet ;
 
 
 
-function onLoad(data, tabletop) {
- // console.log(data);
+	function onLoad(data, tabletop) {
+	// console.log(data);
 
-  buildPDF(tabletop)
+	buildPDF(tabletop)
 };
 
 var options = {
-  key: testURL,
-  callback: onLoad
+	key: testURL,
+	callback: onLoad
 };
 
 
 function drawTimeline(vx,vy,vw,vh,text){
 
 	//das
-	
+
 	doc.lineWidth(4)
 	doc.strokeColor("red")
 	doc.moveTo(vx,vy+20)
@@ -149,7 +149,7 @@ function drawTrainline(vx,vy,vw,vh,text,boxWidth){
 
 
 
-	
+
 }
 
 function drawBlock(vx,vy,vw,vh,text){
@@ -164,66 +164,66 @@ function drawBlock(vx,vy,vw,vh,text){
 	//
 
 	doc.lineWidth(1)
- 	doc.strokeColor("#000000")
- 	doc.fillColor("#ffffff")
-  	doc.rect(vx,vy,vw,vh).fillAndStroke();
-	
+	doc.strokeColor("#000000")
+	doc.fillColor("#ffffff")
+	doc.rect(vx,vy,vw,vh).fillAndStroke();
 
-  	doc.font('Helvetica')
+
+	doc.font('Helvetica')
 	doc.fontSize(18)
-  	doc.fillColor('black')
- 	doc.text(text, vx+20,vy + 20,{width:vw - 40,height:vh - 40,align:'left'});
+	doc.fillColor('black')
+	doc.text(text, vx+20,vy + 20,{width:vw - 40,height:vh - 40,align:'left'});
 
- 	
+
 
 }
 
 
 function drawEnabler(vx,vy,vw,vh,text){
 
-	
- 	doc.fillColor("#999999")
-  	doc.rect(vx,vy,vw,vh).fill();
-  	doc.fillColor("#333")
-  	doc.rect(vx,vy,10,vh).fill();
-	
 
-  	doc.font('Helvetica')
+	doc.fillColor("#999999")
+	doc.rect(vx,vy,vw,vh).fill();
+	doc.fillColor("#333")
+	doc.rect(vx,vy,10,vh).fill();
+
+
+	doc.font('Helvetica')
 	doc.fontSize(18)
-  	doc.fillColor('white')
- 	doc.text(text, vx+30,vy + 20,{width:vw - 50,height:vh - 30,align:'left'});
+	doc.fillColor('white')
+	doc.text(text, vx+30,vy + 20,{width:vw - 50,height:vh - 30,align:'left'});
 
- 	
+
 
 }
 
 function drawBulletBlock(vx,vy,vw,vh,text){
 
-	
 
-	
 
- 	var newText = text.split(".");
+
+
+	var newText = text.split(".");
 	//var build
 
 
 	doc.lineWidth(1)
- 	doc.strokeColor("#e4e4e4")
-  	doc.rect(vx,vy,vw,vh).stroke();
-	
+	doc.strokeColor("#e4e4e4")
+	doc.rect(vx,vy,vw,vh).stroke();
 
-  	doc.font('Helvetica')
+
+	doc.font('Helvetica')
 	doc.fontSize(18)
-  	doc.fillColor('black')
- 	//doc.text(text, vx+20,vy + 20,{width:vw - 40,height:vh - 40,align:'left'});
+	doc.fillColor('black')
+		//doc.text(text, vx+20,vy + 20,{width:vw - 40,height:vh - 40,align:'left'});
 
- //doc.moveTo(vx+20,vy + 20);
+	//doc.moveTo(vx+20,vy + 20);
 	for ( var db = 0 ; db < newText.length; db ++){
- 		if ( db == 0 ){
+		if ( db == 0 ){
 			doc.text("• " + newText[db],vx+20,vy + 20,{width:vw - 50,height:vh - 40,align:'left',paragraphGap:5});		
- 		}else{
- 			doc.text("• " + newText[db],{width:vw - 40,height:vh - 50,align:'left',paragraphGap:5});			
- 		}
+		}else{
+			doc.text("• " + newText[db],{width:vw - 40,height:vh - 50,align:'left',paragraphGap:5});			
+		}
 	}
 
 }
@@ -234,28 +234,28 @@ function drawBulletBlock(vx,vy,vw,vh,text){
 function drawCustomerBlock(vx,vy,vw,vh,text,tillNext){
 
 
-	
-	
+
+
 
 	doc.lineWidth(4)
- 	doc.strokeColor("black")
-  	doc.rect(vx,vy,vw,vh).stroke();
-	
+	doc.strokeColor("black")
+	doc.rect(vx,vy,vw,vh).stroke();
 
-  	doc.font('Helvetica-Bold')
+
+	doc.font('Helvetica-Bold')
 	doc.fontSize(18)
-  	doc.fillColor('black')
- 	doc.text(text, vx+20,vy + 20,{width:vw - 40,height:vh - 40,align:'left'});
+	doc.fillColor('black')
+	doc.text(text, vx+20,vy + 20,{width:vw - 40,height:vh - 40,align:'left'});
 
- 	//how to handle a svg remember to convert shape to path see code at bottom 
- 	/*
- 	doc.save()
- 	doc.lineWidth(10)
- 	doc.fillColor('black')
- 	doc.translate(vx,vy).path('M209.5,87.5L93.1 0 93.1 28.8 0 28.8 0 146.3 93.1 146.3 93.1 175.1 z')
- 	doc.fill()
- 	doc.restore();
-	*/
+		//how to handle a svg remember to convert shape to path see code at bottom 
+		/*
+		doc.save()
+		doc.lineWidth(10)
+		doc.fillColor('black')
+		doc.translate(vx,vy).path('M209.5,87.5L93.1 0 93.1 28.8 0 28.8 0 146.3 93.1 146.3 93.1 175.1 z')
+		doc.fill()
+		doc.restore();
+		*/
 
 	//console.log(tillNext)
 	if ( tillNext != 0 ){
@@ -283,7 +283,7 @@ function drawCustomerBlock(vx,vy,vw,vh,text,tillNext){
 	}
 
 
- 	
+
 
 }
 
@@ -299,89 +299,89 @@ function drawTitleBlock(vx,vy,vw,vh,text){
 
 	  	//doc.rect(vx,vy,vw,vh).fill("#f5f2ef");
 	  	doc.rect(vx,vy,vw,vh).fill("#e4e4e4");
-	  
+
 
 	  	doc.font('Helvetica-Bold')
-		doc.fontSize(30)
+	  	doc.fontSize(30)
 	  	doc.fillColor('black')
-	 	doc.text(text.toUpperCase(), vx+20,vy + 28,{width:vw - 40,height:vh - 40,align:'center'});
+	  	doc.text(text.toUpperCase(), vx+20,vy + 28,{width:vw - 40,height:vh - 40,align:'center'});
 
- 	}
+	  }
 
-}
-function drawRowTitle(vx,vy,vw,text){
+	}
+	function drawRowTitle(vx,vy,vw,text){
 
-	
-  
 
-  	doc.font('Helvetica-Bold')
-	doc.fontSize(14)
-  	doc.fillColor('black')
- 	doc.text(text.toUpperCase(), vx+20,vy + 20,{width:vw - 60,align:'left'});
 
- 	
 
-}
+		doc.font('Helvetica-Bold')
+		doc.fontSize(14)
+		doc.fillColor('black')
+		doc.text(text.toUpperCase(), vx+20,vy + 20,{width:vw - 60,align:'left'});
 
-function drawLine(vx,vy,vw,vh,type,text){
-	
-	doc.lineWidth(vh)
-	doc.strokeColor("black")
-	doc.moveTo(vx,vy)
-	doc.lineTo(vx+vw,vy)
+		
 
-	if (type =="solid"){
+	}
+
+	function drawLine(vx,vy,vw,vh,type,text){
+
+		doc.lineWidth(vh)
+		doc.strokeColor("black")
+		doc.moveTo(vx,vy)
+		doc.lineTo(vx+vw,vy)
+
+		if (type =="solid"){
+			doc.undash()
+			doc.stroke()
+		}
+		if (type =="dashed"){
+			doc.dash(10,{space:10})
+			doc.stroke()
+		}
+		if (type =="dotted"){
+			doc.dash(2,{space:10})
+			doc.stroke()
+		}
 		doc.undash()
-		doc.stroke()
+
+
+		if ( text.substr(0,4).toLowerCase() != "line"){
+			text = "";
+		}
+
+		doc.font('Helvetica-Oblique')
+		doc.fontSize(14)
+		doc.fillColor('#999999')
+		doc.text(text, vx+20,vy-20,{align:'left'});
+
+		
+
 	}
-	if (type =="dashed"){
-		doc.dash(10,{space:10})
-		doc.stroke()
+
+	function drawEnablerLine(vx,vy,vw,vh,text){
+
+		doc.rect(vx,vy,vw,vh).fill("#cccccc");
+
 	}
-	if (type =="dotted"){
-		doc.dash(2,{space:10})
-		doc.stroke()
-	}
-	doc.undash()
 
+	function drawGradientStrip(vx,vy,vw,vh,pageHeight){
+		vh = (pageHeight - vy)
 
-	if ( text.substr(0,4).toLowerCase() != "line"){
-		text = "";
-	}
-	
-	doc.font('Helvetica-Oblique')
-	doc.fontSize(14)
-  	doc.fillColor('#999999')
- 	doc.text(text, vx+20,vy-20,{align:'left'});
+		console.log ("pageHeight " + pageHeight )
+		console.log ("vy " + vy )
 
- 	
+		doc.save()
 
-}
-
-function drawEnablerLine(vx,vy,vw,vh,text){
-
-	  	doc.rect(vx,vy,vw,vh).fill("#cccccc");
-
-}
-
-function drawGradientStrip(vx,vy,vw,vh,pageHeight){
-	vh = (pageHeight - vy)
-
-	console.log ("pageHeight " + pageHeight )
-	console.log ("vy " + vy )
-	
-	doc.save()
-	
-	grad = doc.linearGradient(vx, vy, vx, vy + (vh))
+		grad = doc.linearGradient(vx, vy, vx, vy + (vh))
 	//grad.stop(0, '#ededed').stop(1, 'white')
 	grad.stop(0, '#e4e4e4').stop(.5, '#e4e4e4').stop(1, '#e4e4e4')
 
 
-	
+
 
 	doc.rect(vx,vy,vw,vh).fill(grad);
- 	
- 	doc.restore()
+
+	doc.restore()
 
 }
 
@@ -398,13 +398,13 @@ function buildConnections(cons,blocks){
 
 		var direction = "down"
 		if ( startBlockref[1] > endBlockref[1] ){
- 			direction = "up"
+			direction = "up"
 		}
 		if ( startBlockref[0] > endBlockref[0] ){
- 			direction = "left"
+			direction = "left"
 		}
 		if ( startBlockref[0] < endBlockref[0] ){
- 			direction = "right"
+			direction = "right"
 		}
 
 		
@@ -516,28 +516,28 @@ function isItImage(t){
 	var regex = new RegExp(expression);
 	var result = ""
 
-	  if (t.match(regex) )
-	 {
-	 	result = t.match(regex)[0]
+	if (t.match(regex) )
+	{
+		result = t.match(regex)[0]
 	  // console.log(t.match(regex)[0] );
 
 	  // console.log (checkURL(result) )
 
-	   if (checkURL(result)){
+	  if (checkURL(result)){
 
-	   	return result
-	   }else{
-	   	return null
-	   }
-	 } else {
+	  	return result
+	  }else{
+	  	return null
+	  }
+	} else {
 	  // console.log("No match");
-	   return null
-	 }
+	  return null
+	}
 
 }
 
 function checkURL(url) {
-    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 
@@ -565,7 +565,7 @@ function buildPDF(tabletop) {
 	 }
 	 */
 	 
-//isItImage('http://www.thedrum.com/uploads/news/tmp/980/rugbyworldcup.jpg sds di oaSIDH aosdh aSDI ')
+	//isItImage('http://www.thedrum.com/uploads/news/tmp/980/rugbyworldcup.jpg sds di oaSIDH aosdh aSDI ')
 
 
 
@@ -580,211 +580,217 @@ function buildPDF(tabletop) {
 	doc.save()
 	            //to write the content on the file system
 
-//	forEach( tabletop.sheets(), function(i, sheet) {
+	//	forEach( tabletop.sheets(), function(i, sheet) {
 
 	//console.log ( tabletop.foundSheetNames)
- 	
 
-     var title = 0
-     var boxWidth = 250;
-     var boxHeight = 160;
-     var boxpadding = 40;
 
-  var titleBoxHeight = 80;
-  var timeBoxHeight = 80;
-  var lineHeight = 1;
+	var title = 0
+	var boxWidth = 250; //default boxWidth, used unless title text dosen't fit
+	var boxHeight = 160;
+	var boxpadding = 40;
 
-  var trainlineHeight = 40;
-  var enablerHeight = 80;
- 	
+	var titleBoxHeight = 80;
+	var timeBoxHeight = 80;
+	var lineHeight = 1;
+
+	var trainlineHeight = 40;
+	var enablerHeight = 80;
+
 	for (var key in tabletop.foundSheetNames) {
 		
-   //var obj = tabletop.sheets(tabletop.foundSheetNames[key]);
-  		  var curSheet = tabletop.sheets(tabletop.foundSheetNames[key]);
-  
-  		  
-
-  		  var blocks = {};
-  		  var connections = []
-         
-
-          var arr = curSheet.all()
+		//var obj = tabletop.sheets(tabletop.foundSheetNames[key]);
+		var curSheet = tabletop.sheets(tabletop.foundSheetNames[key]);
 
 
 
-          var pageWidth = (boxWidth * arr.length) + ((arr.length)*boxpadding);
-          var pageHeight = 400
+		var blocks = {};
+		var connections = []
 
-          for (var r = 0 ; r < curSheet.column_names.length; r ++){
-              
-              //TODO: Replace all these if statments with switch case
-              
-          	if (arr[0][curSheet.column_names[r]] != "omit"){
+
+		var arr = curSheet.all()
+
+		//dynamicly change the boxWidth based on the title text. 
+		for (var cell = 0; cell < arr.length; cell ++){
+			if (arr[0][curSheet.column_names[cell]] == "title"){
+				for (var row = 0; row < arr.length; row ++){
+					var celltext = arr[row][curSheet.column_names[cell]].length;
+					if (celltext*20 > boxWidth){
+						boxWidth = celltext*20;
+					}
+				}
+			}
+		}
+
+
+		var pageWidth = (boxWidth * arr.length) + ((arr.length)*boxpadding);
+		var pageHeight = 400
+
+		for (var r = 0 ; r < curSheet.column_names.length; r ++){
+			if (arr[0][curSheet.column_names[r]] != "omit"){
 				//
 				if (arr[0][curSheet.column_names[r]] == "cappedLine"){
-  					pageHeight +=  timeBoxHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "lineSolid"){
-  					pageHeight +=  lineHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "lineDotted"){
-  					pageHeight +=   lineHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "lineDashed"){
-  					pageHeight +=   lineHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "regular"){
-  					pageHeight +=  boxHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "bullet"){
-  					pageHeight +=  boxHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "customerAction"){
-  					pageHeight +=  boxHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "title"){
-  					pageHeight +=  titleBoxHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "trainline"){
-  					pageHeight +=  trainlineHeight + boxpadding
-  				}
-  				if (arr[0][curSheet.column_names[r]] == "enabler"){
-  					pageHeight +=  enablerHeight + boxpadding
-  				}
-  				//
-          	}
-          }
-          console.log (pageHeight )
+					pageHeight +=  timeBoxHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "lineSolid"){
+					pageHeight +=  lineHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "lineDotted"){
+					pageHeight +=  lineHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "lineDashed"){
+					pageHeight +=  lineHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "regular"){
+					pageHeight +=  boxHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "bullet"){
+					pageHeight +=  boxHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "customerAction"){
+					pageHeight +=  boxHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "title"){
+					pageHeight +=  titleBoxHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "trainline"){
+					pageHeight +=  trainlineHeight + boxpadding
+				}
+				if (arr[0][curSheet.column_names[r]] == "enabler"){
+					pageHeight +=  enablerHeight + boxpadding
+				}
+					//
+				}
+			}
+			console.log (pageHeight )
 
 
-           doc.addPage({size:[pageWidth+200,pageHeight]})
-           curPage ++;
+			doc.addPage({size:[pageWidth+200,pageHeight]})
+			curPage ++;
 
 
-           if ( passedArguments.client){
-			doc.font('Helvetica')
-			doc.fontSize(30)
-		  	doc.fillColor('#000')
-		 	doc.text( passedArguments.client.toUpperCase()  , 390,100,{align:'left'});
-		 
-		 
+			if ( passedArguments.client){
+				doc.font('Helvetica')
+				doc.fontSize(30)
+				doc.fillColor('#000')
+				doc.text( passedArguments.client.toUpperCase()  , 390,100,{align:'left'});
 
-           }
+
+
+			}
 
 			doc.font('Helvetica')
 			doc.fontSize(60)
-		  	doc.fillColor('black')
+			doc.fillColor('black')
 			doc.text((Number(key)+1) +". "+curSheet.name, 390,180,{align:'left'});
 
-          
-
-          rowIndex = 0
-
-         // console.log ( curSheet.column_names )
-
-          var colIndex = 100
-   		  var rowIndex = 300
-
-   		  var tempRowHeight = 0
-
-          //console.log(arr[0])
-          
-
-//console.log ( curSheet.all() )
-
-        for (var i = 0 ; i < arr.length; i ++){
 
 
+			rowIndex = 0
 
+	     // console.log ( curSheet.column_names )
 
-          	for (var r = 0 ; r < curSheet.column_names.length; r ++){
+	     var colIndex = 100
+	     var rowIndex = 300
 
-          			//console.log("colName: "+curSheet.column_names[r])
-          			//get content of cell
-          			title = arr[i][curSheet.column_names[r]];
-          			//console.log ( title )
+	     var tempRowHeight = 0
 
-          			//should I omit this
-          			if (arr[0][curSheet.column_names[r]] != "omit"){
-          				
-	          			
+	      //console.log(arr[0])
+	      
 
-          				if (arr[0][curSheet.column_names[r]] == "cappedLine"){
-          					tempRowHeight =  timeBoxHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "lineSolid"){
-          					tempRowHeight =  lineHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "lineDotted"){
-          					tempRowHeight =  lineHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "lineDashed"){
-          					tempRowHeight =  lineHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "regular"){
-          					tempRowHeight = boxHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "bullet"){
-          					tempRowHeight = boxHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "customerAction"){
-          					tempRowHeight = boxHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "title"){
-          					tempRowHeight = titleBoxHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "trainline"){
-          					tempRowHeight = trainlineHeight
-          				}
-          				if (arr[0][curSheet.column_names[r]] == "enabler"){
-          					tempRowHeight = enablerHeight
-          				}
+	//console.log ( curSheet.all() )
 
-          				//firstColumn
-          				if ( i == 0 ){
-          					//title should be column header
-          					title = curSheet.column_names[r];
-          					// drawthelines
-							
-							var lineWidth = (boxWidth * arr.length) + ((arr.length)*boxpadding)
-
-
-
-							if (arr[0][curSheet.column_names[r]] == "lineSolid"){
-	          					drawLine(colIndex,rowIndex,lineWidth,lineHeight,"solid",title)
-	          				}
-	          				if (arr[0][curSheet.column_names[r]] == "lineDotted"){
-	          					drawLine(colIndex,rowIndex,lineWidth,lineHeight,"dotted",title)
-	          				}
-	          				if (arr[0][curSheet.column_names[r]] == "lineDashed"){
-	          					drawLine(colIndex,rowIndex,lineWidth,lineHeight,"dashed",title)
-	          				}
-	          				if ( title.toLowerCase() == "line of visibility"){
-          						drawGradientStrip(colIndex,rowIndex,lineWidth,boxpadding,pageHeight - 100 )
-          					}
-
-
-          					if (arr[0][curSheet.column_names[r]] == "enabler"){
-          						console.log ( "sdsdsdsds")
-	          					drawEnablerLine(colIndex + boxWidth + boxpadding,rowIndex,lineWidth - boxWidth - boxpadding,enablerHeight,title)
-	          				}
+	for (var i = 0 ; i < arr.length; i ++){
 
 
 
 
-          				}
+		for (var r = 0 ; r < curSheet.column_names.length; r ++){
 
-	          			
+	      			//console.log("colName: "+curSheet.column_names[r])
+	      			//get content of cell
+	      			title = arr[i][curSheet.column_names[r]];
+	      			//console.log ( title )
+
+	      			//should I omit this
+	      			if (arr[0][curSheet.column_names[r]] != "omit"){
+	      			
+	      				
+
+	      				if (arr[0][curSheet.column_names[r]] == "cappedLine"){
+	      					tempRowHeight =  timeBoxHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "lineSolid"){
+	      					tempRowHeight =  lineHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "lineDotted"){
+	      					tempRowHeight =  lineHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "lineDashed"){
+	      					tempRowHeight =  lineHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "regular"){
+	      					tempRowHeight = boxHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "bullet"){
+	      					tempRowHeight = boxHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "customerAction"){
+	      					tempRowHeight = boxHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "title"){
+	      					tempRowHeight = titleBoxHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "trainline"){
+	      					tempRowHeight = trainlineHeight
+	      				}
+	      				if (arr[0][curSheet.column_names[r]] == "enabler"){
+	      					tempRowHeight = enablerHeight
+	      				}
+
+	      				//firstColumn
+	      				if ( i == 0 ){
+	      					//title should be column header
+	      					title = curSheet.column_names[r];
+	      					// drawthelines
+
+	      					var lineWidth = (boxWidth * arr.length) + ((arr.length)*boxpadding)
+
+	      					//TODO: Switch case
+
+	      					if (arr[0][curSheet.column_names[r]] == "lineSolid"){
+	      						drawLine(colIndex,rowIndex,lineWidth,lineHeight,"solid",title)
+	      					}
+	      					if (arr[0][curSheet.column_names[r]] == "lineDotted"){
+	      						drawLine(colIndex,rowIndex,lineWidth,lineHeight,"dotted",title)
+	      					}
+	      					if (arr[0][curSheet.column_names[r]] == "lineDashed"){
+	      						drawLine(colIndex,rowIndex,lineWidth,lineHeight,"dashed",title)
+	      					}
+	      					if ( title.toLowerCase() == "line of visibility"){
+	      						drawGradientStrip(colIndex,rowIndex,lineWidth,boxpadding,pageHeight - 100 )
+	      					}
+	      					if (arr[0][curSheet.column_names[r]] == "enabler"){
+	      						console.log ( "enabler rendered")
+	      						drawEnablerLine(colIndex + boxWidth + boxpadding,rowIndex,lineWidth - boxWidth - boxpadding,enablerHeight,title)
+	      					}
 
 
 
-	          			if (title != "" && title != "~" ){
+
+	      				}
 
 
-	          				var initSearch = i + 1
-	          				var multiplier = 1
-	          				for (var s = initSearch; s < arr.length; s++){
-	          					if (arr[s][curSheet.column_names[r]] == "~"  ){
+
+
+
+	      				if (title != "" && title != "~" ){
+
+
+	      					var initSearch = i + 1
+	      					var multiplier = 1
+	      					for (var s = initSearch; s < arr.length; s++){
+	      						if (arr[s][curSheet.column_names[r]] == "~"  ){
 	          						//console.log("here")
 	          						multiplier += 1
 	          						//console.log(multiplier)
@@ -796,7 +802,7 @@ function buildPDF(tabletop) {
 	          				}
 	          				//console.log(multiplier + " " + title)
 	          				
-		          				var newWidth = (boxWidth * multiplier) + ((multiplier-1)*boxpadding)
+	          				var newWidth = (boxWidth * multiplier) + ((multiplier-1)*boxpadding)
 		          				//console.log("build")
 		          				//console.log(multiplier)
 		          				/*
@@ -808,16 +814,16 @@ function buildPDF(tabletop) {
 		          				}else{
 		          					drawBlock(colIndex,rowIndex,newWidth,boxHeight,title)
 		          				}
-								*/
+		          				*/
 
-								if ( i != 0 ){
+		          				if ( i != 0 ){
 
-									var isBlock = false;
+		          					var isBlock = false;
 
-									var isEnd = false;
+		          					var isEnd = false;
 
 
-									var newLabel = String.fromCharCode(65 + r) +""+ String(i+2);
+		          					var newLabel = String.fromCharCode(65 + r) +""+ String(i+2);
 
 									//var test = title.match(/{(.*)}/);
 									var test = title.match(/\*(.*)/);
@@ -847,9 +853,9 @@ function buildPDF(tabletop) {
 									//	console.log ("left "+ title)
 
 
-										for ( var con = 0; con < test[1].split(",").length; con ++){
+									for ( var con = 0; con < test[1].split(",").length; con ++){
 
-											if ( test[1].split(",")[con] =="|"){
+										if ( test[1].split(",")[con] =="|"){
 												//console.log("This is the end")
 												isEnd = true
 											}else{
@@ -889,32 +895,32 @@ function buildPDF(tabletop) {
 
 
 									//}
-									}
+								}
 									//console.log(connections)
 									//
 									if (arr[0][curSheet.column_names[r]] == "trainline"){
-			          					drawTrainline(colIndex,rowIndex,newWidth + boxpadding,trainlineHeight,title, boxWidth)
-			          				}
-			          				if (arr[0][curSheet.column_names[r]] == "enabler"){
-			          					drawEnabler(colIndex,rowIndex,newWidth,enablerHeight,title)
-			          				}
-			          				if (arr[0][curSheet.column_names[r]] == "cappedLine"){
-			          					drawTimeline(colIndex,rowIndex,newWidth,10,title)
-			          				}
-			          				if (arr[0][curSheet.column_names[r]] == "regular"){
-			          					drawBlock(colIndex,rowIndex,newWidth,boxHeight,title)
-			          					isBlock = true;
-			          				}
-			          				if (arr[0][curSheet.column_names[r]] == "bullet"){
-			          					drawBulletBlock(colIndex,rowIndex,newWidth,boxHeight,title)
-			          					isBlock = true;
-			          				}
-			          				if (arr[0][curSheet.column_names[r]] == "customerAction"){
+										drawTrainline(colIndex,rowIndex,newWidth + boxpadding,trainlineHeight,title, boxWidth)
+									}
+									if (arr[0][curSheet.column_names[r]] == "enabler"){
+										drawEnabler(colIndex,rowIndex,newWidth,enablerHeight,title)
+									}
+									if (arr[0][curSheet.column_names[r]] == "cappedLine"){
+										drawTimeline(colIndex,rowIndex,newWidth,10,title)
+									}
+									if (arr[0][curSheet.column_names[r]] == "regular"){
+										drawBlock(colIndex,rowIndex,newWidth,boxHeight,title)
+										isBlock = true;
+									}
+									if (arr[0][curSheet.column_names[r]] == "bullet"){
+										drawBulletBlock(colIndex,rowIndex,newWidth,boxHeight,title)
+										isBlock = true;
+									}
+									if (arr[0][curSheet.column_names[r]] == "customerAction"){
 
 
-			          					var tillNext = 0
-				          				for (var s = i + 1; s < arr.length; s++){
-				          					if (arr[s][curSheet.column_names[r]] == "" ){
+										var tillNext = 0
+										for (var s = i + 1; s < arr.length; s++){
+											if (arr[s][curSheet.column_names[r]] == "" ){
 				          						//console.log("here")
 				          						tillNext += 1
 				          						//console.log(multiplier)
@@ -932,26 +938,26 @@ function buildPDF(tabletop) {
 				          					tillNextWidth = 0;
 				          				}
 
-			          					drawCustomerBlock(colIndex,rowIndex,newWidth,boxHeight,title,tillNextWidth)
+				          				drawCustomerBlock(colIndex,rowIndex,newWidth,boxHeight,title,tillNextWidth)
 
-			          					isBlock = true;
-			          				}
-			          				if (arr[0][curSheet.column_names[r]] == "title"){
-			          					drawTitleBlock(colIndex,rowIndex,newWidth,titleBoxHeight,title)
-			          				}
+				          				isBlock = true;
+				          			}
+				          			if (arr[0][curSheet.column_names[r]] == "title"){
+				          				drawTitleBlock(colIndex,rowIndex,newWidth,titleBoxHeight,title)
+				          			}
 
-			          				if ( isBlock ){
+				          			if ( isBlock ){
 				          				blocks[newLabel] = [colIndex,rowIndex,newWidth,boxHeight];
-			          				}
-			          				
+				          			}
 
 
-		          				}else{
-		          					if (arr[0][curSheet.column_names[r]] != "lineSolid" &&arr[0][curSheet.column_names[r]] != "lineDashed" &&arr[0][curSheet.column_names[r]] != "lineDotted" ){
-		          						drawRowTitle(colIndex,rowIndex,newWidth,title)
-		          						
-		          					}
-		          				}
+
+				          		}else{
+				          			if (arr[0][curSheet.column_names[r]] != "lineSolid" &&arr[0][curSheet.column_names[r]] != "lineDashed" &&arr[0][curSheet.column_names[r]] != "lineDotted" ){
+				          				drawRowTitle(colIndex,rowIndex,newWidth,title)
+
+				          			}
+				          		}
 
 
 
@@ -968,14 +974,14 @@ function buildPDF(tabletop) {
 							  	doc.fillColor('black')
 							 	doc.text(title, colIndex+20,rowIndex + 20,{width:newWidth - 40,align:'left'})
 							 	*/
-						 	
-					 	}
 
-					 	rowIndex += (tempRowHeight + boxpadding)
+							 }
+
+							 rowIndex += (tempRowHeight + boxpadding)
 
 
-				 	}
-          	}
+							}
+						}
 			//drawCOlumnEndLine
 			/*
 			doc.lineWidth(1)
@@ -986,71 +992,71 @@ function buildPDF(tabletop) {
 			doc.stroke()
 			*/
 
-          	rowIndex = 300
-          	colIndex += (boxWidth + boxpadding) 
+			rowIndex = 300
+			colIndex += (boxWidth + boxpadding) 
 
 
 
 
-          	
 
 
 
 
-		  	
-
-          }
-         // console.log ( blocks ) 
-
-        // console.log ( connections ) 
-
-         buildConnections(connections,blocks)
-          
-          
-
-		  
 
 
 
-		  
+		}
+	     // console.log ( blocks ) 
+
+	    // console.log ( connections ) 
+
+	    buildConnections(connections,blocks)
 
 
-/*
-   for (var prop in obj) {
-      console.log(prop + " = " + obj[prop]);
-   }
-  */ 
-   //console.log(tabletop.foundSheetNames[key])
+
+
+
+
+
+
+
+
+	/*
+	for (var prop in obj) {
+	  console.log(prop + " = " + obj[prop]);
+	}
+	*/ 
+	//console.log(tabletop.foundSheetNames[key])
 }
 
 
 
- 	/*
- 	var m = 	tabletop.sheets()
- 	m.forEach(function(i,sheet){
+		/*
+		var m = 	tabletop.sheets()
+		m.forEach(function(i,sheet){
 
- 		console.log(sheet.name)
- 	})
+			console.log(sheet.name)
+		})
 	tabletop.sheets().each(function(i,sheet){
-          //$("#table_info").append("<p>" + sheet.name + " has " + sheet.column_names.join(", ") + "</p>");
+	      //$("#table_info").append("<p>" + sheet.name + " has " + sheet.column_names.join(", ") + "</p>");
 
-          var title = sheet.name;
-          doc.addPage({size:[1000,200]})
+	      var title = sheet.name;
+	      doc.addPage({size:[1000,200]})
 		  doc.text(title, 100, 100);
 		  
 
 
-    });
+	});
 
-*/
+	*/
 
 
 	//doc.addPage({size:[1000,200]})
 	//doc.text(text, 100, 100);             //adding the text to be written,
 	//doc.circle(100, 50, 50).dash(5,{space:30}).stroke() 
 	            // more things can be added here including new pages
-	
-	addAnyImagesAndEnd()
+
+	            addAnyImagesAndEnd()
 
 	//setTimeout(function() { endPDF(); }, 10000);
 
@@ -1069,45 +1075,45 @@ function addAnyImagesAndEnd(){
 
 
 		var http = require('http')
-		  , fs = require('fs')
-		  , options
+		, fs = require('fs')
+		, options
 
 		
 		options = useThis[0]
 
 		var request = http.get(options, function(res){
-		    var imagedata = ''
-		    res.setEncoding('binary')
+			var imagedata = ''
+			res.setEncoding('binary')
 
-		    res.on('data', function(chunk){
-		        imagedata += chunk
-		    })
+			res.on('data', function(chunk){
+				imagedata += chunk
+			})
 
-		    res.on('end', function(){
+			res.on('end', function(){
 
 		    	//doc.image(imagedata,vx,vy, {width: vw} )
 
 		    	//console.log ( imagedata)
 
 		    	fs.writeFile(passedArguments.outputfolder + 'tempory'+num+'.jpg', imagedata, 'binary', function(err){
-		            if (err){
-		            	throw err
-		            }
-		            console.log('File saved.');
+		    		if (err){
+		    			throw err
+		    		}
+		    		console.log('File saved.');
 		            //callthis()
 		           // setTimeout(function() { callthis(vx,vy,vw,vh,text,tillNext); }, 5000);
 		        	//console.log(doc);
 		        	doc.switchToPage( useThis[5] )
-			        doc.image(passedArguments.outputfolder + 'tempory'+num+'.jpg',useThis[1],useThis[2], {fit: [useThis[3],useThis[4]] } )
+		        	doc.image(passedArguments.outputfolder + 'tempory'+num+'.jpg',useThis[1],useThis[2], {fit: [useThis[3],useThis[4]] } )
 
-			        addAnyImagesAndEnd()
+		        	addAnyImagesAndEnd()
 		        })
 
 		    })
 
 		})
 		request.on('error', function(e) {
-		  console.log('error: ' + e.message);
+			console.log('error: ' + e.message);
 		});
 		request.end();
 
@@ -1123,7 +1129,7 @@ function addAnyImagesAndEnd(){
 		console.log ("doc has ended")
 	}
 
-	
+
 	/*
 	var http = require('http')
 		  , fs = require('fs')
@@ -1169,10 +1175,10 @@ function addAnyImagesAndEnd(){
 
 		*/
 
-}
+	}
 
 
-function endPDF(){
+	function endPDF(){
 	doc.end(); //we end the document writing.
 	console.log ("doc has ended")
 
@@ -1190,32 +1196,32 @@ Tabletop.init(options);
 
 
 
-/*
+	/*
 
 
 
-Open your SVG in a web browser.
-Run this code:
+	Open your SVG in a web browser.
+	Run this code:
 
-var polys = document.querySelectorAll('polygon,polyline');
-[].forEach.call(polys,convertPolyToPath);
+	var polys = document.querySelectorAll('polygon,polyline');
+	[].forEach.call(polys,convertPolyToPath);
 
-function convertPolyToPath(poly){
-  var svgNS = poly.ownerSVGElement.namespaceURI;
-  var path = document.createElementNS(svgNS,'path');
-  var points = poly.getAttribute('points').split(/\s+|,/);
-  var x0=points.shift(), y0=points.shift();
-  var pathdata = 'M'+x0+','+y0+'L'+points.join(' ');
-  if (poly.tagName=='polygon') pathdata+='z';
-  path.setAttribute('d',pathdata);
-  poly.parentNode.replaceChild(path,poly);
-}
-Using the Developer Tools (or Firebug) of the browser, use "Copy as HTML" (or Copy SVG) on the element to get the modified source onto the clipboard.
+	function convertPolyToPath(poly){
+	var svgNS = poly.ownerSVGElement.namespaceURI;
+	var path = document.createElementNS(svgNS,'path');
+	var points = poly.getAttribute('points').split(/\s+|,/);
+	var x0=points.shift(), y0=points.shift();
+	var pathdata = 'M'+x0+','+y0+'L'+points.join(' ');
+	if (poly.tagName=='polygon') pathdata+='z';
+	path.setAttribute('d',pathdata);
+	poly.parentNode.replaceChild(path,poly);
+	}
+	Using the Developer Tools (or Firebug) of the browser, use "Copy as HTML" (or Copy SVG) on the element to get the modified source onto the clipboard.
 
-Paste into a new file and enjoy.
-
-
+	Paste into a new file and enjoy.
 
 
-*/
+
+
+	*/
 
