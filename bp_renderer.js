@@ -616,6 +616,9 @@ function buildPDF(tabletop) {
           var pageHeight = 400
 
           for (var r = 0 ; r < curSheet.column_names.length; r ++){
+              
+              //TODO: Replace all these if statments with switch case
+              
           	if (arr[0][curSheet.column_names[r]] != "omit"){
 				//
 				if (arr[0][curSheet.column_names[r]] == "cappedLine"){
